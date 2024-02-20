@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 	"log"
+
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
 func initBot() (string, *messaging_api.MessagingApiAPI) {
@@ -43,29 +44,21 @@ func getQuickReplies(isPrimaryStudent bool) []messaging_api.QuickReplyItem {
 			Text:  "คณิตศาสตร์",
 		},
 	}}
-	for key, value := range commonSubjects {
-		res = append(res, messaging_api.QuickReplyItem{
-			Action: messaging_api.MessageAction{
-				Label: key,
-				Text:  value,
-			},
-		})
-	}
 
 	extraSubjects := highSchoolSubjects
 	if isPrimaryStudent {
 		extraSubjects = primarySubject
 	}
 
-	for key, value := range extraSubjects {
-		commonSubjects[key] = value
+	for key, value := range commonSubjects {
+		extraSubjects[key] = value
 	}
 
-	for key, value := range commonSubjects {
+	for key, value := range extraSubjects {
 		res = append(res, messaging_api.QuickReplyItem{
 			Action: messaging_api.UriAction{
 				Label: value,
-				Uri:   "https://85b2-115-87-239-131.ngrok-free.app/subject/" + key,
+				Uri:   "https://line-messaging.onrender.com/subject/" + key,
 			},
 		})
 	}
