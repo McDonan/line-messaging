@@ -18,20 +18,24 @@ func Check(w http.ResponseWriter, req *http.Request) {
 	b := now%2 == 0
 	isPremiumUser := b
 	if !isPremiumUser {
+		log.Println("/check: not premium user")
 		if _, err := bot.PushMessage(&messaging_api.PushMessageRequest{
 			To: userId,
 			Messages: []messaging_api.MessageInterface{messaging_api.TextMessage{
 				Text: "สมัครบริการแบบพรีเมียม เพื่อให้น้องมานะ เอไอช่วยสอนการบ้านได้ง่ายๆ \" แตะที่นี่เพื่อสมัคร \"",
 			}},
 		}, ""); err != nil {
+			log.Println(fmt.Sprintf("/check: error from bot.PushMessage; %v", err))
 			w.WriteHeader(500)
 		}
 	}
 
 	user, err := bot.GetProfile(userId)
 	if err != nil {
+		log.Println(fmt.Sprintf("/check: error from bot.GetProfile; %v", err))
 		w.WriteHeader(500)
 	}
+	log.Println(fmt.Sprintf("/check: %s is premium user", user.DisplayName))
 
 	primaryStudent := b
 	if _, err := bot.PushMessage(&messaging_api.PushMessageRequest{
@@ -46,6 +50,7 @@ func Check(w http.ResponseWriter, req *http.Request) {
 			},
 		},
 	}, ""); err != nil {
+		log.Println(fmt.Sprintf("/check: error from bot.PushMessage; %v", err))
 		w.WriteHeader(500)
 	}
 }
