@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"errors"
@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func callback(w http.ResponseWriter, req *http.Request) {
+func Callback(w http.ResponseWriter, req *http.Request) {
 	log.Println("/callback called...")
 
 	channelSecret, bot := initBot()

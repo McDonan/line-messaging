@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func check(w http.ResponseWriter, req *http.Request) {
+func Check(w http.ResponseWriter, req *http.Request) {
 	log.Println("/check called...")
 
 	_, bot := initBot()

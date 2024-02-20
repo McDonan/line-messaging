@@ -16,6 +16,7 @@ package main
 
 import (
 	"fmt"
+	"line-messaging/handler"
 	"log"
 	"net/http"
 	"os"
@@ -23,8 +24,8 @@ import (
 
 func main() {
 	// Setup HTTP Server for receiving requests from LINE platform
-	http.HandleFunc("/callback", callback)
-	http.HandleFunc("/check", check)
+	http.HandleFunc("/callback", handler.Callback)
+	http.HandleFunc("/check", handler.Check)
 
 	// This is just sample code.
 	// For actual use, you must support HTTPS by using `ListenAndServeTLS`, a reverse proxy or something else.

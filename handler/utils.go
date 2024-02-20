@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
@@ -57,20 +57,15 @@ func getQuickReplies(isPrimaryStudent bool) []messaging_api.QuickReplyItem {
 		extraSubjects = primarySubject
 	}
 
-	for key, value := range commonSubjects {
-		res = append(res, messaging_api.QuickReplyItem{
-			Action: messaging_api.MessageAction{
-				Label: key,
-				Text:  value,
-			},
-		})
+	for key, value := range extraSubjects {
+		commonSubjects[key] = value
 	}
 
-	for key, value := range extraSubjects {
+	for key, value := range commonSubjects {
 		res = append(res, messaging_api.QuickReplyItem{
-			Action: messaging_api.MessageAction{
-				Label: key,
-				Text:  value,
+			Action: messaging_api.UriAction{
+				Label: value,
+				Uri:   "https://85b2-115-87-239-131.ngrok-free.app/subject/" + key,
 			},
 		})
 	}
